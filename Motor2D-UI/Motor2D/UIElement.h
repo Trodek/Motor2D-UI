@@ -2,6 +2,8 @@
 #define _UIELEMENT_
 
 #include "SDL\include\SDL.h"
+#include "j1App.h"
+#include "j1Render.h"
 
 class j1Module;
 
@@ -25,7 +27,18 @@ public:
 		return true;
 	}
 
-	virtual void Draw() {}
+	virtual void Draw() 
+	{
+		SDL_Rect viewport;
+		if (parent != nullptr)
+			viewport = { parent->GetPosition().x, parent->GetPosition().y, parent->position.w, parent->position.h };
+		else
+			viewport = App->render->viewport;
+		App->render->SetViewPort(viewport);
+		InnerDraw();
+		App->render->ResetViewPort();
+	}
+	virtual void InnerDraw() {}
 
 	UItypes GetType()const { return type; }
 	

@@ -19,12 +19,11 @@ public:
 	~UIButton(){}
 
 	// Draw
-	void Draw() 
+	void InnerDraw() 
 	{
 		if (image_rect.w == 0)
 			Standard();
-		iPoint pos = GetPosition();
-		App->render->Blit(App->gui->GetAtlas(), pos.x, pos.y, &image_rect,false);
+		App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &image_rect,false);
 	}
 
 	//Set Draw Rect

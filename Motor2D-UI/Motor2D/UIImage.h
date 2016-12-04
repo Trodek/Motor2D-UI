@@ -14,9 +14,8 @@ public:
 
 	UIImage(UItypes type, int x, int y, UIElement* parent, bool can_react = true, int width = 0, int height = 0) : UIElement(type, x, y, parent, can_react, width, height) {  }
 
-	void Draw() {
-		iPoint pos = GetPosition();
-		App->render->Blit(App->gui->GetAtlas(), pos.x, pos.y, &image_rect,false);
+	void InnerDraw() {
+		App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &image_rect,false);
 	}
 
 	void SetRect(SDL_Rect img_rect) {

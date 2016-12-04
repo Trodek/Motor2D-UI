@@ -63,15 +63,15 @@ bool j1Scene::Start()
 	button2->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });
 	button2->listener = this;
 
-	text2 = (UILabel*)App->gui->CreateUIElement(Label, 50, 60, 90, 15, button2);
+	text2 = (UILabel*)App->gui->CreateUIElement(Label, 50, 6, 90, 15, button2);
 	text2->SetText("_______________");
 	text2->listener = this;
 
-	button = (UIButton*)App->gui->CreateUIElement(Button, 10, 30, 218, 57, text2);
+	button = (UIButton*)App->gui->CreateUIElement(Button, 10, 30, 218, 57, window);
 	button->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });
 	button->listener = this;
 
-	text = (UILabel*)App->gui->CreateUIElement(Label, 50, 20, 90, 15, button);
+	text = (UILabel*)App->gui->CreateUIElement(Label, 5, 2, 90, 15, button);
 	text->SetText("HOLA RIC :)");
 	text->listener = this;
 	text->is_static = true;
@@ -140,35 +140,35 @@ bool j1Scene::Update(float dt)
 
 	App->map->Draw();	
 
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d",
-					App->map->data.width, App->map->data.height,
-					App->map->data.tile_width, App->map->data.tile_height,
-					App->map->data.tilesets.count(),
-					map_coordinates.x, map_coordinates.y);
+	//int x, y;
+	//App->input->GetMousePosition(x, y);
+	//iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
+	//p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d",
+	//				App->map->data.width, App->map->data.height,
+	//				App->map->data.tile_width, App->map->data.tile_height,
+	//				App->map->data.tilesets.count(),
+	//				map_coordinates.x, map_coordinates.y);
 
 	//App->win->SetTitle(title.GetString());
 
 	// Debug pathfinding ------------------------------
 	//int x, y;
-	App->input->GetMousePosition(x, y);
-	p2SString mouse("Mouse %d %d, Rect x: %d %d y: %d %d", x, y, text->position.x, text->position.x+text->position.w, text->position.y, text->position.y+text->position.h);
-	App->win->SetTitle(mouse.GetString());
-	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
-	p = App->map->MapToWorld(p.x, p.y);
-
-	App->render->Blit(debug_tex, p.x, p.y);
-
-	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
-
-	for(uint i = 0; i < path->Count(); ++i)
-	{
-		iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		App->render->Blit(debug_tex, pos.x, pos.y);
-	}
+	//App->input->GetMousePosition(x, y);
+	//p2SString mouse("Mouse %d %d, Rect x: %d %d y: %d %d", x, y, text->position.x, text->position.x+text->position.w, text->position.y, text->position.y+text->position.h);
+	//App->win->SetTitle(mouse.GetString());
+	//iPoint p = App->render->ScreenToWorld(x, y);
+	//p = App->map->WorldToMap(p.x, p.y);
+	//p = App->map->MapToWorld(p.x, p.y);
+	//
+	//App->render->Blit(debug_tex, p.x, p.y);
+	//
+	//const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
+	//
+	//for(uint i = 0; i < path->Count(); ++i)
+	//{
+	//	iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+	//	App->render->Blit(debug_tex, pos.x, pos.y);
+	//}
 
 	return true;
 }

@@ -11,7 +11,7 @@
 #include "UIImage.h"
 #include "UIButton.h"
 #include "UIWindow.h"
-
+#include "UIInputText.h"
 
 
 j1Gui::j1Gui() : j1Module()
@@ -151,6 +151,7 @@ UIElement * j1Gui::CreateUIElement(UItypes type, int pos_x, int pos_y, int w, in
 	case CheckBox:
 		break;
 	case InputText:
+		element = new UIInputText(pos_x, pos_y,w,h,parent);
 		break;
 	case OutputField:
 		break;

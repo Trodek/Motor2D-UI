@@ -18,11 +18,10 @@ public:
 	~UIWindow() {}
 
 	// Draw
-	void Draw()
+	void InnerDraw()
 	{
 		if (visible){
-			iPoint pos = GetPosition();
-			App->render->Blit(App->gui->GetAtlas(), pos.x, pos.y, &image_rect, false); 
+			App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &image_rect, false); 
 		}
 	}
 
