@@ -205,45 +205,25 @@ void j1Scene::UIReaction(UIElement * element, int react)
 		if (element == text2) {
 			text2->SetText("SIMON NOOB");
 		}
-		if (element == button) {
-			button->Highlight();
-		}
 		break;
 	case MouseLeave:
 		if (element == text) {
 			text->SetText("Hola Ric :)");
-		}
-		if (element == button) {
-			button->Standard();
 		}
 		break;
 	case RightClick:
 		if (element == text) {
 			text->SetText("Right Click");
 		}
-		if (element == button) {
-			button->Clicked();
-		}
 		break;
 	case LeftClick:
 		if (element == text) {
 			text->SetText("Left Click");
 		}
-		if (element == button) {
-			button->Clicked();
-		}
 		break;
 	case LeftClickUp:
-		if (element == button) {
-			button->Highlight();
-		}
 		break;
 	case RightClickUp:
-		if (element == button) {
-			button->Highlight();
-		}
-		break;
-	case Drag:
 		break;
 	case Tab:
 		break;

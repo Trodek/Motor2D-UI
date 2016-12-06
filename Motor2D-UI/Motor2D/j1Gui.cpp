@@ -95,9 +95,6 @@ bool j1Gui::Update(float dt)
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_UP) {
 				react = RightClickUp;
 			}
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT && (mouse.x != last_mouse.x || mouse.y != last_mouse.y)) {
-				react = Drag;
-			}
 		}
 		else {
 			if (item->mouse_over) {
@@ -151,20 +148,42 @@ void j1Gui::UIReaction(UIElement * element, int react)
 	switch (reaction)
 	{
 	case MouseEnter:
+		if (element->GetType() == Button) {
+			UIButton* button = dynamic_cast<UIButton*>(element);
+			button->Highlight();
+		}
 		break;
 	case MouseLeave:
+		if (element->GetType() == Button) {
+			UIButton* button = dynamic_cast<UIButton*>(element);
+			button->Standard();
+		}
 		break;
 	case RightClick:
+		if (element->GetType() == Button) {
+			UIButton* button = dynamic_cast<UIButton*>(element);
+			button->Clicked();
+		}
 		break;
 	case LeftClick:
+		if (element->GetType() == Button) {
+			UIButton* button = dynamic_cast<UIButton*>(element);
+			button->Clicked();
+		}
 		break;
 	case RightClickUp:
+		if (element->GetType() == Button) {
+			UIButton* button = dynamic_cast<UIButton*>(element);
+			button->Highlight();
+		}
 		break;
 	case LeftClickUp:
+		if (element->GetType() == Button) {
+			UIButton* button = dynamic_cast<UIButton*>(element);
+			button->Highlight();
+		}
 		break;
 	case Tab:
-		break;
-	case Drag: 
 		break;
 	case None:
 		break;

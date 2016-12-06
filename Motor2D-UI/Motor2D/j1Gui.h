@@ -11,7 +11,7 @@
 // ---------------------------------------------------
 
 enum Reaction {
-	MouseEnter, MouseLeave, RightClick, LeftClick, RightClickUp, LeftClickUp, Tab, Drag, None
+	MouseEnter, MouseLeave, RightClick, LeftClick, RightClickUp, LeftClickUp, Tab, None
 };
 
 class UIElement;

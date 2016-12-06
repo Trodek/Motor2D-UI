@@ -11,7 +11,7 @@
 class UIWindow : public UIImage {
 public:
 	//Constructor
-	UIWindow(int x, int y, int w, int h, UIElement* parent) : UIImage(Button, x, y, parent, true, w, h)
+	UIWindow(int x, int y, int w, int h, UIElement* parent) : UIImage(Window, x, y, parent, true, w, h)
 	{
 	}
 	// Destructor
