@@ -53,7 +53,7 @@ bool j1Scene::Start()
 
 	window = (UIWindow*)App->gui->CreateUIElement(Window, 30, 30,421,453);
 	window->SetRect({ 32,542,421,453 });
-	window->listener = this;
+	window->listeners.add(this);
 
 	banner = (UIImage*)App->gui->CreateUIElement(Image, 50, 50,0,0,window);
 	banner->SetRect({ 485, 829, 328, 103 });
@@ -61,24 +61,24 @@ bool j1Scene::Start()
 
 	button2 = (UIButton*)App->gui->CreateUIElement(Button, 70, 150, 218, 57, window);
 	button2->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });
-	button2->listener = this;
+	button2->listeners.add(this);
 
 	text2 = (UILabel*)App->gui->CreateUIElement(Label, 50, 6, 90, 15, button2);
 	text2->SetText("_______________");
-	text2->listener = this;
+	text2->listeners.add(this);
 
 	button = (UIButton*)App->gui->CreateUIElement(Button, 10, 30, 218, 57, window);
 	button->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });
-	button->listener = this;
+	button->listeners.add(this);
 
 	text = (UILabel*)App->gui->CreateUIElement(Label, 5, 2, 90, 15, button);
 	text->SetText("HOLA RIC :)");
-	text->listener = this;
+	text->listeners.add(this);
 	text->is_static = true;
 
 	input_text = (UIInputText*)App->gui->CreateUIElement(InputText, 70, 50, 50, 20);
 	input_text->SetDefaultText("Hello World");
-	input_text->listener = this;
+	input_text->listeners.add(this);
 	input_text->is_static = true;
 
 	return true;
@@ -244,10 +244,6 @@ void j1Scene::UIReaction(UIElement * element, int react)
 		}
 		break;
 	case Drag:
-		int x_motion, y_motion;
-		App->input->GetMouseMotion(x_motion, y_motion);
-		if(x_motion != 0 || y_motion != 0)
-			element->SetPos(element->GetLocalPosition().x + x_motion, element->GetLocalPosition().y + y_motion);
 		break;
 	case Tab:
 		break;

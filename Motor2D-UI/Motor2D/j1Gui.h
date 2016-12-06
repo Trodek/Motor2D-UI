@@ -43,6 +43,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void UIReaction(UIElement* element, int react);
+
 	// TODO 2: Create the factory methods
 	// Gui creation functions
 

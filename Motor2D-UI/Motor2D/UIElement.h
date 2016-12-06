@@ -72,7 +72,7 @@ public:
 	SDL_Rect position;
 	bool can_react = true;
 	bool mouse_over = false;
-	j1Module* listener;
+	p2List<j1Module*> listeners;
 	bool is_static = false;
 	iPoint last_position;
 private:
