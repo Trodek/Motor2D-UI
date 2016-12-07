@@ -52,6 +52,9 @@ public:
 
 	UIElement* CreateUIElement(UItypes type, int pos_x, int pos_y, int w = 0, int h = 0, UIElement* parent = nullptr);
 
+	void DeleteUIElement(UIElement* element);
+	void ClearUIElements();
+
 private:
 
 	SDL_Texture* atlas;

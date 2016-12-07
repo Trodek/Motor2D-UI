@@ -110,7 +110,7 @@ bool j1Gui::Update(float dt)
 		}
 	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT && (mouse.x != last_mouse.x || mouse.y != last_mouse.y)) {
-		if (focused_element != nullptr) {
+		if (focused_element != nullptr && focused_element->can_move) {
 			int x_motion = mouse.x - last_mouse.x, y_motion = mouse.y - last_mouse.y;
 			focused_element->SetPos(focused_element->GetLocalPosition().x + x_motion, focused_element->GetLocalPosition().y + y_motion);
 		}
@@ -234,6 +234,28 @@ UIElement * j1Gui::CreateUIElement(UItypes type, int pos_x, int pos_y, int w, in
 	}
 
 	return element;
+}
+
+void j1Gui::DeleteUIElement(UIElement * element)
+{
+	for (p2List_item<UIElement*>* item = UIelements.start; item; item = item->next) {
+		if (item->data == element) {
+			if (focused_element == item->data)
+				focused_element = nullptr;
+			RELEASE(item->data);
+			UIelements.del(item);
+			break;
+		}
+	}
+}
+
+void j1Gui::ClearUIElements()
+{
+	for (p2List_item<UIElement*>* item = UIelements.start; item != nullptr; item = item->next) {
+		RELEASE(item->data);
+	}
+	focused_element = nullptr;
+	UIelements.clear();
 }
 
 // class Gui ---------------------------------------------------

@@ -36,6 +36,7 @@ public:
 			viewport = App->render->viewport;
 		App->render->SetViewPort(viewport);
 		InnerDraw();
+		DebugDraw();
 		App->render->ResetViewPort();
 	}
 	virtual void InnerDraw() {}
@@ -68,10 +69,15 @@ public:
 		return parent;
 	}
 
+	void DebugDraw(){
+		App->render->DrawQuad(position, 255U, 0U, 0U, 255U, false, false);
+	}
+
 public:
 	SDL_Rect position;
 	bool can_react = true;
 	bool mouse_over = false;
+	bool can_move = true;
 	p2List<j1Module*> listeners;
 	bool is_static = false;
 	iPoint last_position;
