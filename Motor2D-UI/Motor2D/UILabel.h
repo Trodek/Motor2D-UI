@@ -16,6 +16,7 @@ public:
 	void InnerDraw() {
 		text_texture = App->font->Print(text.GetString());
 		SDL_QueryTexture(text_texture, NULL, NULL, &texture_rect.w, &texture_rect.h);
+
 		App->render->Blit(text_texture, position.x, position.y,&texture_rect,false);
 	}
 

@@ -23,20 +23,21 @@ public:
 	}
 	bool Update() {
 		if (App->gui->focused_element == this) {
+			App->input->StartInputText(&text, &cursor_position);
 			if (!active) {
 				active = true;
 				text.Clear();
-				App->input->StartInputText(&text, &cursor_position);
 			}
 
 		}
 		else {
-			if (text.Length() < 1 && active) 
-				text = default_text;
 			if (active) {
-				active = false;
 				if(App->input->input_text == &text)
 					App->input->EndInputText();
+				if (text.Length() < 1) {
+					text = default_text;
+					active = false;
+				}
 			}
 		}
 		return true;
