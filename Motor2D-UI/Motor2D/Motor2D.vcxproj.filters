@@ -147,6 +147,9 @@
     <ClInclude Include="UIInputText.h">
       <Filter>Desenvolupament  ========\GuiElements</Filter>
     </ClInclude>
+    <ClInclude Include="UIScrollBar.h">
+      <Filter>Desenvolupament  ========\GuiElements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">

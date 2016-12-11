@@ -83,6 +83,7 @@ public:
 	iPoint last_position;
 	bool to_delete = false;
 	bool active = true;
+	iPoint draw_offset = { 0,0 };
 
 private:
 	UItypes type;
