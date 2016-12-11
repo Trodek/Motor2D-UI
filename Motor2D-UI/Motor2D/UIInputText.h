@@ -15,11 +15,14 @@ public:
 	~UIInputText(){}
 
 	void InnerDraw() {
+		if (text_texture != nullptr)
+			SDL_DestroyTexture(text_texture);
 		text_texture = App->font->Print(text.GetString());
 		SDL_QueryTexture(text_texture, NULL, NULL, &texture_rect.w, &texture_rect.h);
-		App->render->Blit(text_texture, position.x, position.y, &texture_rect, false);
+		App->render->SetViewPort({ GetPosition().x,GetPosition().y,position.w,position.h });
+		App->render->Blit(text_texture, 0, 0, &texture_rect, false);
 		if (App->gui->focused_element == this)
-			App->render->DrawQuad({ position.x+cursor_position, position.y, 2, position.h }, 255U, 255U, 255U, 255U);
+			App->render->DrawQuad({ cursor_position, 0, 2, position.h }, 255U, 255U, 255U, 255U);
 	}
 	bool Update() {
 		if (App->gui->focused_element == this) {

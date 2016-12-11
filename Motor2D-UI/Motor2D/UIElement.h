@@ -35,8 +35,8 @@ public:
 		else
 			viewport = App->render->viewport;
 		App->render->SetViewPort(viewport);
-		InnerDraw();
 		DebugDraw();
+		InnerDraw();
 		App->render->ResetViewPort();
 	}
 	virtual void InnerDraw() {}

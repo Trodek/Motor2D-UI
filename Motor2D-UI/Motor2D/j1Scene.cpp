@@ -63,7 +63,7 @@ bool j1Scene::Start()
 	button2->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });
 	button2->listeners.add(this);
 
-	text2 = (UILabel*)App->gui->CreateUIElement(Label, 50, 6, 90, 15, button2);
+	text2 = (UILabel*)App->gui->CreateUIElement(Label, 50, 6, 90, 20, button2);
 	text2->SetText("_______________");
 	text2->listeners.add(this);
 
@@ -71,7 +71,7 @@ bool j1Scene::Start()
 	button->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });
 	button->listeners.add(this);
 
-	text = (UILabel*)App->gui->CreateUIElement(Label, 5, 2, 90, 15, button);
+	text = (UILabel*)App->gui->CreateUIElement(Label, 5, 2, 90, 20, button);
 	text->SetText("HOLA RIC :)");
 	text->listeners.add(this);
 	text->is_static = true;
