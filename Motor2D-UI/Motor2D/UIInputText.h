@@ -18,7 +18,8 @@ public:
 		text_texture = App->font->Print(text.GetString());
 		SDL_QueryTexture(text_texture, NULL, NULL, &texture_rect.w, &texture_rect.h);
 		App->render->Blit(text_texture, position.x, position.y, &texture_rect, false);
-		App->render->DrawQuad({ position.x, position.y, 2, position.h }, 255U, 255U, 255U, 255U);
+		if (App->gui->focused_element == this)
+			App->render->DrawQuad({ position.x+cursor_position, position.y, 2, position.h }, 255U, 255U, 255U, 255U);
 	}
 	bool Update() {
 		if (App->gui->focused_element == this) {
