@@ -81,6 +81,9 @@ public:
 	p2List<j1Module*> listeners;
 	bool is_static = false;
 	iPoint last_position;
+	bool to_delete = false;
+	bool active = true;
+
 private:
 	UItypes type;
 	UIElement* parent = nullptr;
