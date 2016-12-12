@@ -10,12 +10,12 @@ class UIImage : public UIElement {
 public:
 
 	UIImage() : UIElement(Image, 0, 0,nullptr) {}
-	UIImage(int pos_x, int pos_y, UIElement* parent) : UIElement(Image, pos_x, pos_y, parent) {  }
+	UIImage(int pos_x, int pos_y, int w, int h, UIElement* parent) : UIElement(Image, pos_x, pos_y, parent, true, w, h) {  }
 
 	UIImage(UItypes type, int x, int y, UIElement* parent, bool can_react = true, int width = 0, int height = 0) : UIElement(type, x, y, parent, can_react, width, height) {  }
 
 	void InnerDraw() {
-		App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &image_rect,false);
+		App->render->Blit(App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &image_rect,false);
 	}
 
 	void SetRect(SDL_Rect img_rect) {

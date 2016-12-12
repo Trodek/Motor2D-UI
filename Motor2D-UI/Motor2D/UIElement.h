@@ -8,7 +8,7 @@
 class j1Module;
 
 enum UItypes {
-	CheckBox, InputText, OutputField, Button, Label, Image, Window, Unknow
+	CheckBox, InputText, ScrollBar, Button, Label, Image, Window, Unknow
 };
 
 class UIElement {
@@ -36,6 +36,7 @@ public:
 			viewport = App->render->viewport;
 		App->render->SetViewPort(viewport);
 		DebugDraw();
+		App->render->SetViewPort({ GetPosition().x,GetPosition().y,position.w,position.h });
 		InnerDraw();
 		App->render->ResetViewPort();
 	}

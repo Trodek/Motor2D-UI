@@ -23,7 +23,7 @@ public:
 	{
 		if (image_rect.w == 0)
 			Standard();
-		App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &image_rect,false);
+		App->render->Blit(App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &image_rect,false);
 	}
 
 	//Set Draw Rect

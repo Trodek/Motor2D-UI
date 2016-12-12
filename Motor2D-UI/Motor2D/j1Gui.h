@@ -50,9 +50,11 @@ public:
 
 	SDL_Texture* GetAtlas() const;
 
-	UIElement* CreateUIElement(UItypes type, int pos_x, int pos_y, int w = 0, int h = 0, UIElement* parent = nullptr);
+	UIElement* CreateUIElement(UItypes type, int pos_x, int pos_y, int w, int h, UIElement* parent = nullptr);
 
 	void DeleteUIElement(UIElement* element);
+	
+private:
 	void ClearUIElements();
 
 private:
@@ -68,6 +70,7 @@ private:
 
 public:
 	UIElement* focused_element = nullptr;
+
 };
 
 #endif // __j1GUI_H__

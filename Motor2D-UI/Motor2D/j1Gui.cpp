@@ -214,8 +214,6 @@ UIElement * j1Gui::CreateUIElement(UItypes type, int pos_x, int pos_y, int w, in
 	case InputText:
 		element = new UIInputText(pos_x, pos_y,w,h,parent);
 		break;
-	case OutputField:
-		break;
 	case Button:
 		element = new UIButton(pos_x, pos_y, w, h, parent);
 		break;
@@ -223,7 +221,7 @@ UIElement * j1Gui::CreateUIElement(UItypes type, int pos_x, int pos_y, int w, in
 		element = new UILabel(pos_x, pos_y, w, h, parent);
 		break;
 	case Image:
-		element = new UIImage(pos_x, pos_y, parent);
+		element = new UIImage(pos_x, pos_y, w, h, parent);
 		break;
 	case Window:
 		element = new UIWindow(pos_x, pos_y, w, h, parent);

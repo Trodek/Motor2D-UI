@@ -55,7 +55,7 @@ bool j1Scene::Start()
 	window->SetRect({ 32,542,421,453 });
 	window->listeners.add(this);
 
-	banner = (UIImage*)App->gui->CreateUIElement(Image, 50, 50,0,0,window);
+	banner = (UIImage*)App->gui->CreateUIElement(Image, 50, 50,328,103,window);
 	banner->SetRect({ 485, 829, 328, 103 });
 	banner->can_react = false;
 
