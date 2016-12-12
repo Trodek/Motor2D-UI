@@ -31,14 +31,14 @@ public:
 			//scroll->position.y = 0;
 			if (pos_diff != scroll->GetLocalPosition().x - bar->GetLocalPosition().x) {
 				pos_diff = scroll->GetLocalPosition().x - bar->GetLocalPosition().x;
-				target->Scroll('h', (float)pos_diff / (float)(bar->position.w - 2*scroll->position.w)); //horizontal scrollbar
+				target->Scroll('h', (float)pos_diff / (float)(bar->position.w - scroll->position.w)); //horizontal scrollbar
 			}
 		}
 		else if (position.h > position.w) {
 			//scroll->position.x = 0;
 			if (pos_diff != scroll->GetLocalPosition().y - bar->GetLocalPosition().y) {
 				pos_diff = scroll->GetLocalPosition().y - bar->GetLocalPosition().y;
-				target->Scroll('v', (float)pos_diff / (float)(bar->position.h - 2*scroll->position.h)); //verticall scrollbar
+				target->Scroll('v', (float)pos_diff / (float)(bar->position.h - scroll->position.h)); //verticall scrollbar
 			}
 		}
 		return true;

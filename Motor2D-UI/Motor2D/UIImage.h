@@ -22,6 +22,15 @@ public:
 		image_rect = img_rect;
 	}
 
+	void Scroll(char dir, float percentage) {
+		if (dir == 'h') {
+			draw_offset.x = -(image_rect.w-position.w)*percentage;
+		}
+		if (dir == 'v') {
+			draw_offset.y = -(image_rect.h-position.h)*percentage;
+		}
+	}
+
 public:
 	SDL_Rect image_rect = { 0,0,0,0 };
 private:

@@ -56,7 +56,7 @@ bool j1Scene::Start()
 	window->SetRect({ 32,542,421,453 });
 	window->listeners.add(this);
 
-	banner = (UIImage*)App->gui->CreateUIElement(Image, 50, 50,100,50,window);
+	banner = (UIImage*)App->gui->CreateUIElement(Image, 50, 50,100,20,window);
 	banner->SetRect({ 485, 829, 328, 103 });
 	banner->can_react = false;
 
@@ -65,6 +65,12 @@ bool j1Scene::Start()
 	vertical->SetBar(974, 788, 8, 154);
 	vertical->SetScroll(843, 330, 15, 10);
 	vertical->target = banner;
+
+	horizontal = (UIScrollBar*)App->gui->CreateUIElement(ScrollBar, 60, 80, 154, 15, window);
+	horizontal->can_move = false;
+	horizontal->SetBar(974, 788, 154, 8);
+	horizontal->SetScroll(843, 330, 10, 15);
+	horizontal->target = banner;
 
 	button2 = (UIButton*)App->gui->CreateUIElement(Button, 70, 150, 218, 57, window);
 	button2->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });

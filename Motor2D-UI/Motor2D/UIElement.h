@@ -35,6 +35,11 @@ public:
 		else
 			viewport = App->render->viewport;
 		App->render->SetViewPort(viewport);
+		//check element is inside parent boundaries
+		if (position.x < 0) position.x = 0;
+		if (position.y < 0)position.y = 0;
+		if (GetPosition().x + position.w > viewport.x + viewport.w) position.x = viewport.w - position.w;
+		if (GetPosition().y + position.h > viewport.y + viewport.h) position.y = viewport.h - position.h;
 		DebugDraw();
 		App->render->SetViewPort({ GetPosition().x,GetPosition().y,position.w,position.h });
 		InnerDraw();
@@ -74,7 +79,7 @@ public:
 		App->render->DrawQuad(position, 255U, 0U, 0U, 255U, false, false);
 	}
 
-	void Scroll(char dir, float percentage) {
+	virtual void Scroll(char dir, float percentage) {
 		if (dir == 'h') {
 			draw_offset.x = -position.w*percentage;
 		}

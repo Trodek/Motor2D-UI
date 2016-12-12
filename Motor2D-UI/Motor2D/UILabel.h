@@ -25,6 +25,15 @@ public:
 		text = txt;
 	}
 
+	void Scroll(char dir, float percentage) {
+		if (dir == 'h') {
+			draw_offset.x = -(texture_rect.w-position.w)*percentage;
+		}
+		if (dir == 'v') {
+			draw_offset.y = -(texture_rect.h-position.h)*percentage;
+		}
+	}
+
 public:
 	std::string text = "";
 	SDL_Texture* text_texture;
