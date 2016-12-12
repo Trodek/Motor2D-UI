@@ -15,6 +15,7 @@
 #include "UIInputText.h"
 #include "j1Scene.h"
 #include "UIWindow.h"
+#include "UIScrollBar.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -55,9 +56,15 @@ bool j1Scene::Start()
 	window->SetRect({ 32,542,421,453 });
 	window->listeners.add(this);
 
-	banner = (UIImage*)App->gui->CreateUIElement(Image, 50, 50,328,103,window);
+	banner = (UIImage*)App->gui->CreateUIElement(Image, 50, 50,100,50,window);
 	banner->SetRect({ 485, 829, 328, 103 });
 	banner->can_react = false;
+
+	vertical = (UIScrollBar*)App->gui->CreateUIElement(ScrollBar, 40, 50, 15, 154, window);
+	vertical->can_move = false;
+	vertical->SetBar(974, 788, 8, 154);
+	vertical->SetScroll(843, 330, 15, 10);
+	vertical->target = banner;
 
 	button2 = (UIButton*)App->gui->CreateUIElement(Button, 70, 150, 218, 57, window);
 	button2->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });

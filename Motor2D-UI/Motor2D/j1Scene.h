@@ -9,6 +9,7 @@ class UILabel;
 class UIButton;
 class UIWindow;
 class UIInputText;
+class UIScrollBar;
 
 class j1Scene : public j1Module
 {
@@ -49,6 +50,8 @@ private:
 	UIButton* button2;
 	UIWindow* window;
 	UIInputText* input_text;
+	UIScrollBar* horizontal;
+	UIScrollBar* vertical;
 };
 
 #endif // __j1SCENE_H__

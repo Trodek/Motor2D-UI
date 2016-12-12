@@ -12,6 +12,7 @@
 #include "UIButton.h"
 #include "UIWindow.h"
 #include "UIInputText.h"
+#include "UIScrollBar.h"
 
 
 j1Gui::j1Gui() : j1Module()
@@ -225,6 +226,10 @@ UIElement * j1Gui::CreateUIElement(UItypes type, int pos_x, int pos_y, int w, in
 		break;
 	case Window:
 		element = new UIWindow(pos_x, pos_y, w, h, parent);
+		break;
+	case ScrollBar:
+		element = new UIScrollBar(pos_x, pos_y, w, h, parent);
+		break;
 	case Unknow:
 		break;
 	default:
