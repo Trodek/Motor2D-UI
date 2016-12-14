@@ -11,7 +11,7 @@
 // ---------------------------------------------------
 
 enum Reaction {
-	MouseEnter, MouseLeave, RightClick, LeftClick, RightClickUp, LeftClickUp, Tab, None
+	MouseEnter, MouseLeave, RightClick, LeftClick, RightClickUp, LeftClickUp, Tab, LeftArrow, UpArrow, RightArrow, DownArrow, None
 };
 
 class UIElement;
@@ -50,7 +50,7 @@ public:
 
 	SDL_Texture* GetAtlas() const;
 
-	UIElement* CreateUIElement(UItypes type, int pos_x, int pos_y, int w, int h, UIElement* parent = nullptr);
+	UIElement* CreateUIElement(UItypes type, int pos_x, int pos_y, UIElement* parent = nullptr, int w = 0, int h = 0 );
 
 	void DeleteUIElement(UIElement* element);
 	
@@ -67,9 +67,12 @@ private:
 	p2Stack<UIElement*> react_stack;
 
 	iPoint last_mouse;
+	bool focus_changed = false;
 
 public:
 	UIElement* focused_element = nullptr;
+
+	UIElement* GetNextFocus();
 
 };
 

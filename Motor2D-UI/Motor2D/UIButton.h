@@ -15,6 +15,9 @@ public:
 	UIButton(int x, int y, int w, int h,UIElement* parent) : UIImage(Button,x,y,parent,true,w,h)
 	{
 	}
+	UIButton(UItypes type, int x, int y, int w, int h, UIElement* parent) : UIImage(type, x, y, parent, true, w, h)
+	{
+	}
 	// Destructor
 	~UIButton(){}
 
@@ -31,6 +34,10 @@ public:
 		standard_rect = std_rect;
 		highlight_rect = hl_rect;
 		clicked_rect = click_rect;
+		if (position.w == 0 && position.h == 0) {
+			position.w = std_rect.w;
+			position.h = std_rect.h;
+		}
 	}
 	void Standard() {
 		image_rect = standard_rect;
@@ -38,8 +45,12 @@ public:
 	void Highlight() {
 		image_rect = highlight_rect;
 	}
-	void Clicked() {
+	virtual void Clicked() {
 		image_rect = clicked_rect;
+	}
+
+	SDL_Rect GetClickedRect() const{
+		return clicked_rect;
 	}
 
 public:

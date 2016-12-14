@@ -150,6 +150,9 @@
     <ClInclude Include="UIScrollBar.h">
       <Filter>Desenvolupament  ========\GuiElements</Filter>
     </ClInclude>
+    <ClInclude Include="UICheckBox.h">
+      <Filter>Desenvolupament  ========\GuiElements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">
@@ -173,5 +176,10 @@
     <Filter Include="Desenvolupament  ========\GuiElements">
       <UniqueIdentifier>{91929050-ff15-49c6-8d1a-d0883940ca37}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Game\config.xml">
+      <Filter>Desenvolupament  ========</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

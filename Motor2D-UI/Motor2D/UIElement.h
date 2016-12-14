@@ -40,20 +40,21 @@ public:
 		if (position.y < 0)position.y = 0;
 		if (GetPosition().x + position.w > viewport.x + viewport.w) position.x = viewport.w - position.w;
 		if (GetPosition().y + position.h > viewport.y + viewport.h) position.y = viewport.h - position.h;
-		DebugDraw();
+		//DebugDraw();
 		App->render->SetViewPort({ GetPosition().x,GetPosition().y,position.w,position.h });
 		InnerDraw();
 		App->render->ResetViewPort();
 	}
 	virtual void InnerDraw() {}
 
+	virtual void CleanUp(){}
+
 	UItypes GetType()const { return type; }
 	
 	void SetPos(int x, int y) {
-		if (!is_static) {
-			position.x = x; 
-			position.y = y;
-		}
+		position.x = x; 
+		position.y = y;
+		
 	}
 
 	int GetPriority()const {
@@ -88,13 +89,25 @@ public:
 		}
 	}
 
+	void AddListener(j1Module* module) {
+		if (listeners.find(module) == -1) {
+			listeners.add(module);
+		}
+	}
+
+	p2List_item<j1Module*>* GetFirstListener() {
+		return listeners.start;
+	}
+
+	p2List_item<j1Module*>* GetLastListener() {
+		return listeners.end;
+	}
+
 public:
 	SDL_Rect position;
 	bool can_react = true;
 	bool mouse_over = false;
 	bool can_move = true;
-	p2List<j1Module*> listeners;
-	bool is_static = false;
 	iPoint last_position;
 	bool to_delete = false;
 	bool active = true;
@@ -104,6 +117,7 @@ private:
 	UItypes type;
 	UIElement* parent = nullptr;
 	int priority = 0;
+	p2List<j1Module*> listeners;
 
 private:
 

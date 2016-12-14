@@ -20,6 +20,10 @@ public:
 
 	void SetRect(SDL_Rect img_rect) {
 		image_rect = img_rect;
+		if (position.w == 0 && position.h == 0) {
+			position.w = img_rect.w;
+			position.h = img_rect.h;
+		}
 	}
 
 	void Scroll(char dir, float percentage) {

@@ -10,6 +10,7 @@ class UIButton;
 class UIWindow;
 class UIInputText;
 class UIScrollBar;
+class UICheckBox;
 
 class j1Scene : public j1Module
 {
@@ -52,6 +53,10 @@ private:
 	UIInputText* input_text;
 	UIScrollBar* horizontal;
 	UIScrollBar* vertical;
+	UICheckBox* option1;
+	UICheckBox* option2;
+	UICheckBox* multi_option1;
+	UICheckBox* multi_option2;
 };
 
 #endif // __j1SCENE_H__

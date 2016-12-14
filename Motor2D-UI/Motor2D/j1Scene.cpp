@@ -16,6 +16,7 @@
 #include "j1Scene.h"
 #include "UIWindow.h"
 #include "UIScrollBar.h"
+#include "UICheckBox.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -38,61 +39,70 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	if(App->map->Load("iso_walk.tmx") == true)
-	{
-		int w, h;
-		uchar* data = NULL;
-		if(App->map->CreateWalkabilityMap(w, h, &data))
-			App->pathfinding->SetMap(w, h, data);
-
-		RELEASE_ARRAY(data);
-	}
-
-	debug_tex = App->tex->Load("maps/path2.png");
-
 	// UIElements Creation
 
-	window = (UIWindow*)App->gui->CreateUIElement(Window, 30, 30,421,453);
+	window = (UIWindow*)App->gui->CreateUIElement(Window, 30, 30,nullptr, 421, 453);
 	window->SetRect({ 32,542,421,453 });
-	window->listeners.add(this);
+	window->AddListener(this);
 
-	banner = (UIImage*)App->gui->CreateUIElement(Image, 50, 50,100,20,window);
+	banner = (UIImage*)App->gui->CreateUIElement(Image, 50, 50, window, 50,50);
 	banner->SetRect({ 485, 829, 328, 103 });
 	banner->can_react = false;
+	banner->active = false;
 
-	vertical = (UIScrollBar*)App->gui->CreateUIElement(ScrollBar, 40, 50, 15, 154, window);
+	vertical = (UIScrollBar*)App->gui->CreateUIElement(ScrollBar, 40, 50, window, 15, 154);
 	vertical->can_move = false;
 	vertical->SetBar(974, 788, 8, 154);
 	vertical->SetScroll(843, 330, 15, 10);
 	vertical->target = banner;
 
-	horizontal = (UIScrollBar*)App->gui->CreateUIElement(ScrollBar, 60, 80, 154, 15, window);
+	horizontal = (UIScrollBar*)App->gui->CreateUIElement(ScrollBar, 60, 80, window, 154, 15);
 	horizontal->can_move = false;
 	horizontal->SetBar(974, 788, 154, 8);
 	horizontal->SetScroll(843, 330, 10, 15);
 	horizontal->target = banner;
 
-	button2 = (UIButton*)App->gui->CreateUIElement(Button, 70, 150, 218, 57, window);
+	button2 = (UIButton*)App->gui->CreateUIElement(Button, 70, 150, window);
 	button2->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });
-	button2->listeners.add(this);
+	button2->AddListener(this);
 
-	text2 = (UILabel*)App->gui->CreateUIElement(Label, 50, 6, 90, 20, button2);
+	text2 = (UILabel*)App->gui->CreateUIElement(Label, 50, 6, button2, 90, 20);
 	text2->SetText("_______________");
-	text2->listeners.add(this);
+	text2->AddListener(this);
 
-	button = (UIButton*)App->gui->CreateUIElement(Button, 10, 30, 218, 57, window);
+	button = (UIButton*)App->gui->CreateUIElement(Button, 10, 250, window);
 	button->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });
-	button->listeners.add(this);
+	button->AddListener(this);
 
-	text = (UILabel*)App->gui->CreateUIElement(Label, 5, 2, 90, 20, button);
+	text = (UILabel*)App->gui->CreateUIElement(Label, 5, 2, button, 90, 20);
 	text->SetText("HOLA RIC :)");
-	text->listeners.add(this);
-	text->is_static = true;
+	text->AddListener(this);
+	text->can_move = false;
 
-	input_text = (UIInputText*)App->gui->CreateUIElement(InputText, 70, 50, 50, 20);
+	input_text = (UIInputText*)App->gui->CreateUIElement(InputText, 10, 20, window, 70, 20);
 	input_text->SetDefaultText("Hello World");
-	input_text->listeners.add(this);
-	input_text->is_static = true;
+	input_text->AddListener(this);
+	input_text->can_move = false;
+
+	option1 = (UICheckBox*)App->gui->CreateUIElement(CheckBox, 400, 10);
+	option1->SetRects({ 977,432,20,21 }, { 858,89,20,21 }, { 391,168,12,11 });
+	option1->is_option = true;
+	option1->can_move = false;
+
+	option2 = (UICheckBox*)App->gui->CreateUIElement(CheckBox, 400, 33);
+	option2->SetRects({ 977,432,20,21 }, { 858,89,20,21 }, { 391,168,12,11 });
+	option2->is_option = true;
+	option2->can_move = false;
+	option2->AddOptions(option1);
+
+	multi_option1 = (UICheckBox*)App->gui->CreateUIElement(CheckBox, 450, 10);
+	multi_option1->SetRects({ 992,847,20,20 }, { 992,814,20,20 }, { 391,168,12,11 });
+	multi_option1->can_move = false;
+
+	multi_option2 = (UICheckBox*)App->gui->CreateUIElement(CheckBox, 450, 33);
+	multi_option2->SetRects({ 992,847,20,20 }, { 992,814,20,20 }, { 391,168,12,11 });
+	multi_option2->can_move = false;
+	multi_option2->AddOptions(multi_option1);
 
 	return true;
 }
@@ -101,28 +111,7 @@ bool j1Scene::Start()
 bool j1Scene::PreUpdate()
 {
 
-	// debug pathfing ------------------
-	static iPoint origin;
-	static bool origin_selected = false;
-
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
-
-	if(App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-	{
-		if(origin_selected == true)
-		{
-			App->pathfinding->CreatePath(origin, p);
-			origin_selected = false;
-		}
-		else
-		{
-			origin = p;
-			origin_selected = true;
-		}
-	}
+	
 
 	return true;
 }
@@ -130,58 +119,7 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	// Gui ---
 	
-	// -------
-	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-		App->LoadGame("save_game.xml");
-
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-		App->SaveGame("save_game.xml");
-
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->render->camera.y += floor(200.0f * dt);
-
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->render->camera.y -= floor(200.0f * dt);
-
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->render->camera.x += floor(200.0f * dt);
-
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->render->camera.x -= floor(200.0f * dt);
-
-	App->map->Draw();	
-
-	//int x, y;
-	//App->input->GetMousePosition(x, y);
-	//iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-	//p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d",
-	//				App->map->data.width, App->map->data.height,
-	//				App->map->data.tile_width, App->map->data.tile_height,
-	//				App->map->data.tilesets.count(),
-	//				map_coordinates.x, map_coordinates.y);
-
-	//App->win->SetTitle(title.GetString());
-
-	// Debug pathfinding ------------------------------
-	//int x, y;
-	//App->input->GetMousePosition(x, y);
-	//p2SString mouse("Mouse %d %d, Rect x: %d %d y: %d %d", x, y, text->position.x, text->position.x+text->position.w, text->position.y, text->position.y+text->position.h);
-	//App->win->SetTitle(mouse.GetString());
-	//iPoint p = App->render->ScreenToWorld(x, y);
-	//p = App->map->WorldToMap(p.x, p.y);
-	//p = App->map->MapToWorld(p.x, p.y);
-	//
-	//App->render->Blit(debug_tex, p.x, p.y);
-	//
-	//const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
-	//
-	//for(uint i = 0; i < path->Count(); ++i)
-	//{
-	//	iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-	//	App->render->Blit(debug_tex, pos.x, pos.y);
-	//}
 
 	return true;
 }
@@ -233,12 +171,23 @@ void j1Scene::UIReaction(UIElement * element, int react)
 		if (element == text) {
 			text->SetText("Left Click");
 		}
+		if (element == button2) {
+			banner->active = true;
+		}
 		break;
 	case LeftClickUp:
 		break;
 	case RightClickUp:
 		break;
 	case Tab:
+		break;
+	case RightArrow:
+		break;
+	case LeftArrow:
+		break;
+	case UpArrow:
+		break;
+	case DownArrow:
 		break;
 	default:
 		break;

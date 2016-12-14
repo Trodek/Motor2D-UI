@@ -13,6 +13,7 @@
 #include "UIWindow.h"
 #include "UIInputText.h"
 #include "UIScrollBar.h"
+#include "UICheckBox.h"
 
 
 j1Gui::j1Gui() : j1Module()
@@ -47,6 +48,8 @@ bool j1Gui::Start()
 bool j1Gui::PreUpdate()
 {
 	bool ret = true;
+
+	focus_changed = false;
 
 	ClearUIElements();
 
@@ -108,8 +111,26 @@ bool j1Gui::Update(float dt)
 				react = MouseLeave;
 			}
 		}
+		if (focused_element == item) {
+			if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
+				react = LeftArrow;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
+				react = RightArrow;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
+				react = UpArrow;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
+				react = DownArrow;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
+				if(!focus_changed)
+					focused_element = GetNextFocus();
+			}
+		}
 		if (react != None) {
-			for (p2List_item<j1Module*>* module = item->listeners.start; module; module = module->next) {
+			for (p2List_item<j1Module*>* module = item->GetFirstListener(); module; module = module->next) {
 				module->data->UIReaction(item, react);
 			}
 			break;
@@ -158,11 +179,19 @@ void j1Gui::UIReaction(UIElement * element, int react)
 			UIButton* button = dynamic_cast<UIButton*>(element);
 			button->Highlight();
 		}
+		if (element->GetType() == CheckBox) {
+			UICheckBox* box = dynamic_cast<UICheckBox*>(element);
+			box->Highlight();
+		}
 		break;
 	case MouseLeave:
 		if (element->GetType() == Button) {
 			UIButton* button = dynamic_cast<UIButton*>(element);
 			button->Standard();
+		}
+		if (element->GetType() == CheckBox) {
+			UICheckBox* box = dynamic_cast<UICheckBox*>(element);
+			box->Standard();
 		}
 		break;
 	case RightClick:
@@ -170,11 +199,19 @@ void j1Gui::UIReaction(UIElement * element, int react)
 			UIButton* button = dynamic_cast<UIButton*>(element);
 			button->Clicked();
 		}
+		if (element->GetType() == CheckBox) {
+			UICheckBox* box = dynamic_cast<UICheckBox*>(element);
+			box->Clicked();
+		}
 		break;
 	case LeftClick:
 		if (element->GetType() == Button) {
 			UIButton* button = dynamic_cast<UIButton*>(element);
 			button->Clicked();
+		}
+		if (element->GetType() == CheckBox) {
+			UICheckBox* box = dynamic_cast<UICheckBox*>(element);
+			box->Clicked();
 		}
 		break;
 	case RightClickUp:
@@ -182,11 +219,19 @@ void j1Gui::UIReaction(UIElement * element, int react)
 			UIButton* button = dynamic_cast<UIButton*>(element);
 			button->Highlight();
 		}
+		if (element->GetType() == CheckBox) {
+			UICheckBox* box = dynamic_cast<UICheckBox*>(element);
+			box->Highlight();
+		}
 		break;
 	case LeftClickUp:
 		if (element->GetType() == Button) {
 			UIButton* button = dynamic_cast<UIButton*>(element);
 			button->Highlight();
+		}
+		if (element->GetType() == CheckBox) {
+			UICheckBox* box = dynamic_cast<UICheckBox*>(element);
+			box->Highlight();
 		}
 		break;
 	case Tab:
@@ -204,13 +249,14 @@ SDL_Texture* j1Gui::GetAtlas() const
 	return atlas;
 }
 
-UIElement * j1Gui::CreateUIElement(UItypes type, int pos_x, int pos_y, int w, int h, UIElement* parent)
+UIElement * j1Gui::CreateUIElement(UItypes type, int pos_x, int pos_y, UIElement* parent, int w, int h)
 {
 	UIElement* element = nullptr;
 
 	switch (type)
 	{
 	case CheckBox:
+		element = new UICheckBox(pos_x, pos_y, parent, w, h);
 		break;
 	case InputText:
 		element = new UIInputText(pos_x, pos_y,w,h,parent);
@@ -237,7 +283,7 @@ UIElement * j1Gui::CreateUIElement(UItypes type, int pos_x, int pos_y, int w, in
 	}
 
 	if (element != nullptr) {
-		element->listeners.add(this);
+		element->AddListener(this);
 		UIelements.add(element);
 	}
 
@@ -253,6 +299,7 @@ void j1Gui::ClearUIElements()
 {
 	for (p2List_item<UIElement*>* item = UIelements.start; item != nullptr; item = item->next) {
 		if (item->data->to_delete == true) {
+			item->data->CleanUp();
 			RELEASE(item->data);
 			UIelements.del(item);
 			if (item->data == focused_element)
@@ -260,6 +307,21 @@ void j1Gui::ClearUIElements()
 		}
 
 	}
+}
+
+UIElement * j1Gui::GetNextFocus()
+{
+	UIElement* new_focus = nullptr;
+
+	for (p2List_item<UIElement*>* item = UIelements.end; item; item = item->prev) {
+		if (focused_element->GetPriority() == item->data->GetPriority() && item->data != focused_element && item->data->can_react) {
+			new_focus = item->data;
+		}
+		else if (item->data == focused_element && new_focus != nullptr) break;
+
+	}
+	focus_changed = true;
+	return new_focus;
 }
 
 // class Gui ---------------------------------------------------
